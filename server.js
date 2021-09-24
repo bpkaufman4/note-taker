@@ -2,11 +2,16 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
-
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
+
+app.listen(PORT, () => {
+    console.log(`Note Taker server now on port ${PORT}`);
+})
+
 
 const notes = require('./Develop/db/db.json');
 
@@ -31,10 +36,6 @@ app.post('/api/notes', (req, res) => {
     const note = createNewNote(req.body, notes);
     res.json(note);
     }
-})
-
-app.listen(3001, () => {
-    console.log(`Note Taker server now on port 3001`);
 })
 
 function createNewNote(body, notesArray) {
